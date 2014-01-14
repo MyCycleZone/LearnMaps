@@ -9,33 +9,50 @@
 
 <script>
     var myCenter = new google.maps.LatLng(18.490446, 73.790208);
+    var map;
     function initialize() {
         var mapProp = {
             center: myCenter,
             zoom: 14,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
-        var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+        map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
 
         var marker = new google.maps.Marker({
             position: myCenter,
             animation: google.maps.Animation.BOUNCE
         });
 
-        //var circle = new google.maps.Circle({
-        //    center: myCenter,
-        //    radus: 20000,
-        //    strokeColor: "red",
-        //    strokeOpacity: 0.8,
-        //    strokeWeight: 2,
-        //    fillColor: "red"
-        //});
-        //circle.setMap(map);
-        //circle.bindTo('center', marker, 'position');
         marker.setMap(map);
 
-     
+        var myCity = new google.maps.Circle({
+            center: myCenter,
+            radius: 200,
+            strokeColor: "#0000FF",
+            strokeOpacity: 0.8,
+            strokeWeight: 1,
+            fillColor: "#0000FF",
+            fillOpacity: 0.4
+        });
 
+        myCity.setMap(map);
+        //var zoom = GetZoomLevel(map);
+        //alert(zoom);
+        google.maps.event.addListener(map, 'zoom_changed', newZoom);
+    }
+
+    function newZoom() {
+        var zoomLevel = map.getZoom();
+        //map.setCenter(myLatLng);
+        //infowindow.setContent('Zoom: ' + zoomLevel);
+        alert(zoomLevel);
+    }
+
+
+    function GetZoomLevel(map) {
+        alert(map.getZoom());
+            return map.getZoom();
+      
     }
 
     google.maps.event.addDomListener(window, 'load', initialize);
