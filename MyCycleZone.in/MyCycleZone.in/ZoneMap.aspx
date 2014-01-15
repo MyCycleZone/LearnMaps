@@ -9,36 +9,31 @@
 
 <script>
     var myCenter = new google.maps.LatLng(18.490446, 73.790208);
+    var markers = [];
+    var myCity;
     var map;
     function initialize() {
         var mapProp = {
             center: myCenter,
-            zoom: 14,
+            zoom: 17,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
 
-        var marker = new google.maps.Marker({
-            position: myCenter,
-            animation: google.maps.Animation.BOUNCE
-        });
+        //var marker = new google.maps.Marker({
+        //    position: myCenter,
+        //    animation: google.maps.Animation.BOUNCE
+        //});
 
-        marker.setMap(map);
-
-        var myCity = new google.maps.Circle({
-            center: myCenter,
-            radius: 200,
-            strokeColor: "#0000FF",
-            strokeOpacity: 0.8,
-            strokeWeight: 1,
-            fillColor: "#0000FF",
-            fillOpacity: 0.4
-        });
-
-        myCity.setMap(map);
+        //marker.setMap(map);
+        
         //var zoom = GetZoomLevel(map);
         //alert(zoom);
         google.maps.event.addListener(map, 'zoom_changed', newZoom);
+
+        google.maps.event.addListener(map, 'center_changed', newCenter);
+
+        newCenter();
     }
 
     function newZoom() {
@@ -47,6 +42,50 @@
         //infowindow.setContent('Zoom: ' + zoomLevel);
         alert(zoomLevel);
     }
+
+    function newCenter() {
+
+        
+        setAllMap(null);
+        markers = [];
+        //myCity = null;
+        if(myCity != null)
+            myCity.setMap(null);
+        //myCity.setMap(null);
+        var center = map.getCenter();
+        //map.setCenter();
+        var marker = new google.maps.Marker({
+            position: center,
+            animation: google.maps.Animation.BOUNCE,
+            map: map
+        });
+        markers.push(marker);
+
+        myCity = new google.maps.Circle({
+            center: center,
+            radius: 200,
+            strokeColor: "#0000FF",
+            strokeOpacity: 0.8,
+            strokeWeight: 1,
+            fillColor: "#0000FF",
+            fillOpacity: 0.4,
+            map: map
+        });
+        
+        myCity.setMap(map);
+
+
+        //marker.setMap(map);
+
+    }
+
+    function setAllMap(map) {
+        for (var i = 0; i < markers.length; i++) {
+            markers[i].setMap(map);
+        }
+
+    }
+
 
 
     function GetZoomLevel(map) {
