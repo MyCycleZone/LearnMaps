@@ -57,11 +57,19 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="TestForm.aspx" />
     <Content Include="Web.config" />
     <Content Include="ZoneMap.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestForm.aspx.cs">
+      <DependentUpon>TestForm.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="TestForm.aspx.designer.cs">
+      <DependentUpon>TestForm.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ZoneMap.aspx.cs">
       <DependentUpon>ZoneMap.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
