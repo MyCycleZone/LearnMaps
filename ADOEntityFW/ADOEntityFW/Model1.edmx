@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="myCycleZoneModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="myCycleZoneModelStoreContainer">
+          <EntitySet Name="UserLocation" EntityType="myCycleZoneModel.Store.UserLocation" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Users" EntityType="myCycleZoneModel.Store.Users" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_UserLocation_Users" Association="myCycleZoneModel.Store.FK_UserLocation_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserLocation" EntitySet="UserLocation" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="UserLocation">
+          <Key>
+            <PropertyRef Name="userName" />
+          </Key>
+          <Property Name="userName" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="Location" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="userName" />
+          </Key>
+          <Property Name="userName" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nchar" MaxLength="10" />
+          <Property Name="Home" Type="nvarchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_UserLocation_Users">
+          <End Role="Users" Type="myCycleZoneModel.Store.Users" Multiplicity="1" />
+          <End Role="UserLocation" Type="myCycleZoneModel.Store.UserLocation" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="userName" />
+            </Principal>
+            <Dependent Role="UserLocation">
+              <PropertyRef Name="userName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="myCycleZoneModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="myCycleZoneEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="Users" EntityType="myCycleZoneModel.User" />
+          <EntitySet Name="UserLocations" EntityType="myCycleZoneModel.UserLocation" />
+          <AssociationSet Name="FK_UserLocation_Users" Association="myCycleZoneModel.FK_UserLocation_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserLocation" EntitySet="UserLocations" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="userName" />
+          </Key>
+          <Property Name="userName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="LastName" Type="String" MaxLength="10" Unicode="true" FixedLength="true" />
+          <Property Name="Home" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="UserLocation" Relationship="myCycleZoneModel.FK_UserLocation_Users" FromRole="User" ToRole="UserLocation" />
+        </EntityType>
+        <EntityType Name="UserLocation">
+          <Key>
+            <PropertyRef Name="userName" />
+          </Key>
+          <Property Type="String" Name="userName" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Location" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="User" Relationship="myCycleZoneModel.FK_UserLocation_Users" FromRole="UserLocation" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_UserLocation_Users">
+          <End Type="myCycleZoneModel.User" Role="User" Multiplicity="1" />
+          <End Type="myCycleZoneModel.UserLocation" Role="UserLocation" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="userName" />
+            </Principal>
+            <Dependent Role="UserLocation">
+              <PropertyRef Name="userName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="myCycleZoneModelStoreContainer" CdmEntityContainer="myCycleZoneEntities">
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="myCycleZoneModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="userName" ColumnName="userName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Home" ColumnName="Home" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserLocations">
+            <EntityTypeMapping TypeName="myCycleZoneModel.UserLocation">
+              <MappingFragment StoreEntitySet="UserLocation">
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="userName" ColumnName="userName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
