@@ -1,0 +1,13 @@
+CREATE RESTful WCF Service API Using POST: Step By Step Guide
+
+http://www.codeproject.com/Articles/201901/CREATE-RESTful-WCF-Service-API-Using-POST-Step-By
+
+A Guide to Designing and Building RESTful Web Services with WCF 3.5
+
+http://msdn.microsoft.com/en-us/library/dd203052.aspx
+
+Create REST service with WCF and Consume using jQuery 
+
+http://pranayamr.blogspot.in/2011/03/rest.html
+
+
